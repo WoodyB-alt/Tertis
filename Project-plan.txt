@@ -67,8 +67,9 @@ if you want to use the next peice you must hold the peice youre currently using 
 --create game loop--
 
 --add music --
-add compleatly original music O.o 
+add compleatly original music O.o ----- done--- need to loop 
 
+add background image
 
 === CREATING AI === self playing game AI 
 
