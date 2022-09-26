@@ -19,6 +19,20 @@ Assume a 4×4 block and give each cell indices
 [1, 5, 9, 13] represents the vertical line (second column),  
 [1, 5, 9, 8] represents L shape,
 
+    Maybe a Bitmap would actually be more usefule for this?
+    I = [
+         [1, 0, 0, 0]
+         [1, 0, 0, 0]
+         [1, 0, 0, 0]
+         [1, 0, 0, 0]
+    ]
+    L = [
+         [0, 0, 0, 0]
+         [1, 0, 0, 0]
+         [1, 0, 0, 0]
+         [1, 1, 0, 0]
+    ]
+
 -- colours of blocks (stored in list) --
 RGB values stored in list for each shape 
 
