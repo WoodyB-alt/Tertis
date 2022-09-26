@@ -1,0 +1,94 @@
+Summary of project in two ish lines: 
+
+The aim of this project is to create a self playing game of tetris. Firstly, i will be creeating the base game of tetris using pygame. 
+Following this i will be using a logical algorithm to create a self playng AI in python. 
+
+To DO: 
+
+=== TERTIS ==== a compleatly original game O.o 
+
+-- create variable to store shapes ( stored in list) -- 
+the shapes variable holds the matrix that contains information about the shape of the block. 
+Assume a 4×4 block and give each cell indices
+
+0	1	2	3
+4	5	6	7
+8	9	10	11
+12	13	14	15
+
+[1, 5, 9, 13] represents the vertical line (second column),  
+[1, 5, 9, 8] represents L shape,
+
+-- colours of blocks (stored in list) --
+RGB values stored in list for each shape 
+
+-- create class blocks to store info about current block -- 
+class assigns the coordinates, shape, color and rotation to the block object created.
+Using the function random.randint(), which generates a random integer in the given range, 
+a random shape and color are assigned to a block.
+function rotate() gives the index of the rotation variant of a given shape from the matrix ‘shapes’. 
+And the function image() returns the rotated variant block to the Block object.
+
+--Create new block function--
+creates new block using Block class. 
+ 
+-- create move down logic -- 
+using x and y values create a speed of which the shapes fall, press "speacebar" for instant drop into place  
+
+-- create a roation function -- 
+rotating from a roation point on each shape (each shape has diffrent rotation point to ensure it stays
+within the grid)
+
+-- create function for the keys -- 
+move down, move right, move left, rotate key will be up 
+
+-- create collision logic --
+if the future position of the blocks move into empty space fine, if not then we will need to stop peice on collision
+
+-- line clearing logic -- 
+if blocks in lines are full then that line should be removed and a point should be added to score function 
+this is done via the 
+
+-- create end game function -- 
+
+-- create score function -- 
+
+-- create highscore function --- 
+if the score is higher than the current high score save in a txt file and grab it at start of each game for display 
+
+-- create next peice logic --
+will show the next peice about to be slected
+this is done via the next_block fucuntion 
+it creates the next block that would be appearing on the screen
+
+-- create hold logic --
+if you want to use the next peice you must hold the peice youre currently using (if you use it again it will swap hold peice of current peice)
+
+--create game loop--
+
+--add music --
+add compleatly original music O.o ----- done--- need to loop 
+
+add background image
+
+=== CREATING AI === self playing game AI 
+
+-- algorithm for AI: --
+
+- hold first peice by pressing "h" key 
+
+- For each figure rotation and for each horizontal position, simulate “spacebar” and check the height of our new tower 
+and the number of “holes”.
+
+- Choose the best one, and Press “up” key if the rotation does not correspond.
+
+-Press “left” or “right” keys to move to the corresponding position.
+
+-Press “spacebar” if the position is correct.
+
+-for each figure rotation and for each horizontal postion of the held peice, simulate "spacebar" 
+and check the height of our new tower and number of "holes" if this is better than our current peice then use held peice
+
+- if this is better than the current peice press "H" to swap for held peice.
+
+
