@@ -2,36 +2,36 @@ import pygame
 import random
 from pygame import mixer
 
-#Instantiate mixer
+# Instantiate mixer
 mixer.init()
 
 # Load audio file
 mixer.music.load('Tertis.song.mp3')
 print("music started playing")
 
-#Set preferred volume
+# Set preferred volume
 mixer.music.set_volume(0.2)
 
-#Play the music
+# Play the music
 mixer.music.play(-1)
 
 # background image
 bg = pygame.image.load("bg.png")
 
 pygame.font.init()
-#Global Vars for window
+
+# Global Vars for window
 s_width = 800
 S_height = 700
-play_width = 300 #300 // 10 = 30 width per block
-play_height = 600 #600 // 20 = 20 height per block
+play_width = 300  # 300 // 10 = 30 width per block
+play_height = 600  # 600 // 20 = 20 height per block
 block_size = 30
 
 
 top_left_x = (s_width - play_height) // 2
 top_left_y = S_height - play_height
 
-#SHAPE FORMATS
-
+# Shape bitmaps
 S = [['.....',
       '.....',
       '..00.',
@@ -134,20 +134,23 @@ T = [['.....',
       '..0..',
       '.....']]
 
-shapes = [S, Z, I, O, J, L, T,]
-shape_colors = [(0, 255, 0),
- (255, 0, 0),
- (0, 255, 255),
- (255, 255, 0),
- (255, 165, 0),
- (0, 0, 255),
- (128, 0, 128)]
+shapes = [S, Z, I, O, J, L, T]
+shape_colors = [
+    (0, 255, 0),
+    (255, 0, 0),
+    (0, 255, 255),
+    (255, 255, 0),
+    (255, 165, 0),
+    (0, 0, 255),
+    (128, 0, 128)
+]
+
 
 class Piece():
-    row = 20 #y
-    columns = 10 # x
+    row = 20  # y
+    columns = 10  # x
 
-    def __init__(self,column, row, shape):
+    def __init__(self, column, row, shape):
         self.x = column
         self.y = row
         self.score = 0
@@ -155,13 +158,14 @@ class Piece():
         self.color = shape_colors[shapes.index(shape)]
         self.rotation = 0
 
+
 def make_grid(locked_position={}):
-    grid = [[(0,0,0) for _ in range(10)] for _ in range(20)]
+    grid = [[(0, 0, 0) for _ in range(10)] for _ in range(20)]
 
     for i in range(len(grid)):
         for j in range(len(grid[i])):
-            if (j,i) in locked_position:
-                c = locked_position[(j,i)]
+            if (j, i) in locked_position:
+                c = locked_position[(j, i)]
                 grid[i][j] = c
     return grid
 
@@ -177,12 +181,13 @@ def convert_shape_format(shape):
                 positions.append((shape.x + j, shape.y + i))
 
     for i, pos in enumerate(positions):
-        positions[i] = (pos[0] - 2, pos[1] -4)
+        positions[i] = (pos[0] - 2, pos[1] - 4)
 
     return positions
 
+
 def valid_space(shape, grid):
-    accepted_positions = [[(j, i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
+    accepted_positions = [[(j, i) for j in range(10) if grid[i][j] == (0, 0, 0)] for i in range(20)]
     accepted_positions = [j for sub in accepted_positions for j in sub]
     formatted = convert_shape_format(shape)
 
@@ -192,6 +197,7 @@ def valid_space(shape, grid):
                 return False
 
     return True
+
 
 def check_lost(positions):
     for pos in positions:
@@ -218,9 +224,9 @@ def draw_grid(surface, row, col):
     sx = top_left_x
     sy = top_left_y
     for i in range(row):
-        pygame.draw.line(surface, (128,128,128), (sx, sy + i*30), (sx + play_width, sy + i * 30)) # horizontal lines
+        pygame.draw.line(surface, (128, 128, 128), (sx, sy + i*30), (sx + play_width, sy + i * 30))  # horizontal lines
         for j in range(col):
-            pygame.draw.line(surface, (128,128,128), (sx + j * 30, sy), (sx + j * 30, sy + play_height)) #verticle lines
+            pygame.draw.line(surface, (128, 128, 128), (sx + j * 30, sy), (sx + j * 30, sy + play_height))  # verticle lines
 
 
 def clear_rows(grid, locked):
@@ -235,20 +241,19 @@ def clear_rows(grid, locked):
             for j in range(len(row)):
                 try:
                     del locked[(j, i)]
-                except:
+                except Exception:
                     continue
     if inc > 0:
-        for key in sorted(list(locked), key = lambda x: x[1])[::-1]:
+        for key in sorted(list(locked), key=lambda x: x[1])[::-1]:
             x, y = key
             if y < ind:
                 newKey = (x, y + inc)
                 locked[newKey] = locked.pop(key)
 
 
-
 def draw_next_shape(shape, surface):
     font = pygame.font.SysFont('comicsans', 30)
-    label = font.render('Next Shape', 1 , (255, 255, 255))
+    label = font.render('Next Shape', 1, (255, 255, 255))
 
     sx = top_left_x + play_width + 50
     sy = top_left_y + play_height/2 - 100
@@ -258,18 +263,19 @@ def draw_next_shape(shape, surface):
         row = list(line)
         for j, column in enumerate(row):
             if column == '0':
-                pygame.draw.rect(surface, shape.color, (sx + j*30, sy + i*30, 30,30), 0)
+                pygame.draw.rect(surface, shape.color, (sx + j*30, sy + i*30, 30, 30), 0)
 
     surface.blit(label, (sx + 10, sy - 30))
 
 
 def draw_window(surface):
-    surface.blit(bg, (0,0))
-    #title
-    font = pygame.font.SysFont('comicsans', 60)
-    label = font.render('Tertis', 1, (255,255,255))
+    surface.blit(bg, (0, 0))
 
-    surface.blit(label, (top_left_x + play_width /2 - (label.get_width() /2), 30))
+    # title
+    font = pygame.font.SysFont('comicsans', 60)
+    label = font.render('Tertis', 1, (255, 255, 255))
+
+    surface.blit(label, (top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
     for i in range(len(grid)):
         for j in range(len(grid[i])):
@@ -278,15 +284,13 @@ def draw_window(surface):
     # draw grid and border
     draw_grid(surface, 20, 10)
     pygame.draw.rect(surface, (255, 255, 255), (top_left_x, top_left_y, play_width, play_height), 2)
-    #pygame.display.update()
+
 
 def main():
     global grid
 
-    locked_positions = {} #(x,y):(0,0,0)
+    locked_positions = {}  # (x,y):(0,0,0)
     grid = make_grid(locked_positions)
-
-    score = 0
 
     change_piece = False
     run = True
@@ -302,7 +306,7 @@ def main():
         fall_time += clock.get_rawtime()
         clock.tick()
 
-        #falling pieces
+        # falling pieces
         if fall_time/1000 >= fall_speed:
             fall_time = 0
             current_piece.y += 1
@@ -327,13 +331,13 @@ def main():
                     if not valid_space(current_piece, grid):
                         current_piece.x -= 1
                 elif event.key == pygame.K_UP:
-                    #rotate shape
+                    # rotate shape
                     current_piece.rotation = current_piece.rotation + 1 % len(current_piece.shape)
                     if not valid_space(current_piece, grid):
                         current_piece.rotation = current_piece.rotation - 1 % len(current_piece.shape)
 
                 if event.key == pygame.K_DOWN:
-                    #move down
+                    # move down
                     current_piece.y += 2
                     if not valid_space(current_piece, grid):
                         current_piece.y -= 2
@@ -344,17 +348,15 @@ def main():
                     current_piece.y -= 1
                     print(convert_shape_format(current_piece))
 
-
         shape_pos = convert_shape_format(current_piece)
 
-
-        #add peiece to the grid for drawing
+        # Add piece to the grid for drawing
         for i in range(len(shape_pos)):
             x, y = shape_pos[i]
             if y > -1:
                 grid[y][x] = current_piece.color
 
-        #If piece hits bottom
+        # If piece hits bottom
         if change_piece:
             for pos in shape_pos:
                 p = (pos[0], pos[1])
@@ -363,28 +365,27 @@ def main():
             next_piece = get_shape()
             change_piece = False
 
-            #call four times to check for multipul rows
+            # call four times to check for multipul rows
             clear_rows(grid, locked_positions)
-
 
         draw_window(win)
         draw_next_shape(next_piece, win)
         pygame.display.update()
 
-        #check if user failed
+        # check if user failed
         if check_lost(locked_positions):
             run = False
-
 
     draw_text_middle("LOSER.....Better luck next time", 40, (255, 255, 255), win)
     pygame.display.update()
     pygame.time.delay(2000)
 
+
 def main_menu():
     run = True
     while run:
-        win.blit(bg, (0,0))
-        draw_text_middle("             Press ESC To Start " , 55, (0,255,255), win)
+        win.blit(bg, (0, 0))
+        draw_text_middle("             Press ESC To Start ", 55, (0, 255, 255), win)
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
