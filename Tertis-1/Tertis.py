@@ -5,8 +5,8 @@ from pygame import mixer
 #Instantiate mixer
 mixer.init()
 
-#Load audio file
-mixer.music.load('/Users/blakewood/Desktop/Coding/TERTIS-1/Tertis.song.mp3')
+# Load audio file
+mixer.music.load('Tertis.song.mp3')
 print("music started playing")
 
 #Set preferred volume
@@ -15,8 +15,8 @@ mixer.music.set_volume(0.2)
 #Play the music
 mixer.music.play(-1)
 
-#background image
-bg = pygame.image.load("/Users/blakewood/Desktop/Coding/TERTIS-1/bg.png")
+# background image
+bg = pygame.image.load("bg.png")
 
 pygame.font.init()
 #Global Vars for window
