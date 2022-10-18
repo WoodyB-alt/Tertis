@@ -36,8 +36,11 @@ figure = deepcopy(choice(figures))
 bg = pygame.image.load('bg.png').convert()
 game_bg = pygame.image.load('bg.png').convert()
 
-# Generating random colour values for figures
-get_colour = lambda: (randrange(30, 256), randrange(30, 256), randrange(30, 256))
+
+def get_colour():
+    '''Generate random colour values for figures'''
+    return (randrange(30, 256), randrange(30, 256), randrange(30, 256))
+
 
 # Figures and fonts
 figure, next_figure = deepcopy(choice(figures)), deepcopy(choice(figures))
