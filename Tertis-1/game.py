@@ -31,7 +31,7 @@ figures_pos = [[(-1, 0), (-2, 0), (0, 0), (1, 0)],
 figures = [[pygame.Rect(x + W // 2, y + 1, 1, 1) for x, y in fig_pos] for fig_pos in figures_pos]
 figure_rect = pygame.Rect(0, 0, Tile - 2, Tile - 2)
 field = [[0 for i in range(W)] for j in range(H)]
-anim_count, anim_speed, anim_limit = 0, 60, 2000
+anim_count, anim_speed, anim_limit = 0, 20, 2000
 figure = deepcopy(choice(figures))
 
 
@@ -103,7 +103,7 @@ while True:
         pygame.time.wait(200)
 
     # Controls
-    for event in list(pygame.event.get()) + Tetris_ai.run_ai(field, figures, W, H):
+    for event in list(pygame.event.get()):
         if event.type == pygame.QUIT:
             exit()
         if event.type == pygame.KEYDOWN:
@@ -214,7 +214,7 @@ while True:
         if field[0][i]:
             set_Highscore(Highscore, score)
             field = [[0 for i in range(W)] for i in range(H)]
-            anim_count, anim_speed, anim_limit = 0, 60, 2000
+            anim_count, anim_speed, anim_limit = 0, 20, 2000
             score = 0
             for i_rect in grid:
                 pygame.draw.rect(game_sc, get_colour(), i_rect)
