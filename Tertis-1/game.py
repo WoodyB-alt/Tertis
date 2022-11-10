@@ -1,11 +1,13 @@
+from turtle import width
 import pygame
+import Tetris_ai
 from copy import deepcopy
 from random import choice, randrange
 
 
 W, H = 10, 20
 Tile = 35
-Game_res = W * Tile, H * Tile
+Game_res = [W * Tile, H * Tile]
 res = 750, 750
 FPS = 60
 
@@ -101,7 +103,7 @@ while True:
         pygame.time.wait(200)
 
     # Controls
-    for event in pygame.event.get():
+    for event in list(pygame.event.get()) + Tetris_ai.run_ai(field, figures, W, H):
         if event.type == pygame.QUIT:
             exit()
         if event.type == pygame.KEYDOWN:
@@ -113,6 +115,8 @@ while True:
                 anim_limit = 100
             elif event.key == pygame.K_UP:
                 rotate = True
+            elif event.key == pygame.K_SPACE:
+                anim_limit = 10
 
     # Move x
     figure_old = deepcopy(figure)
