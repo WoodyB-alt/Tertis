@@ -1,3 +1,4 @@
+from turtle import width
 import pygame
 import Tetris_ai
 from copy import deepcopy
