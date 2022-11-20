@@ -3,15 +3,19 @@ Tertis API
 
 Expose a API for controlling the Tertis program.
 """
-
+import pygame
+import game
 
 class TertisApi:
     """Expose api functions for controlling Tertis."""
 
     def __init__(self):
         """Initialize a Tertis Api object."""
-        pass
+        pygame.init()
+        win = pygame.display.set_mode(game.res)
+        game_sc = pygame.Surface(game.Game_res)
+        clock = pygame.time.Clock()
 
-    def startGame():
+    def startGame(self):
         """Start a new Tertis game."""
-        pass
+        open.game.py
